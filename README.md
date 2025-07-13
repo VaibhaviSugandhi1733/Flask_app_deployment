@@ -1,254 +1,141 @@
 
+# 🚀 Flask Docker Deployment with Jenkins CI/CD (Freestyle Job)
 
-\# End-to-End Flask App Deployment with Jenkins Freestyle Job
-
-
-
-This project showcases an end-to-end CI/CD pipeline that builds a custom Docker image for a Python Flask app and deploys it using Jenkins Freestyle Job.
-
-
-
-\## 🚀 Overview
-
-
-
-\- Goal: Automatically build and run a Flask app inside a Docker container using Jenkins Freestyle Job.
-
-\- Tech Stack: Python, Flask, Docker, Jenkins, GitHub
-
-\- Repository: \[GitHub Repo](https://github.com/VaibhaviSugandhi1733/Flask\_app\_deployment.git)
-
-
+This project demonstrates a complete CI/CD pipeline where a Python Flask application is containerized with Docker, pushed to Docker Hub, and deployed automatically using a Jenkins Freestyle Job.
 
 ---
 
+## 📚 Project Overview
 
-
-\## 📦 Technologies Used
-
-
-
-\- Python 3.x
-
-\- Flask
-
-\- Docker
-
-\- Jenkins (Freestyle Job)
-
-\- Git \& GitHub
-
-\- HTML (basic inline frontend)
-
-
+- **App**: Python Flask Web App  
+- **CI/CD Tool**: Jenkins (Freestyle Job)  
+- **Containerization**: Docker  
+- **Image Hosting**: Docker Hub  
+- **Source Code**: [GitHub Repository](https://github.com/VaibhaviSugandhi1733/Flask_app_deployment.git)
 
 ---
 
+## 🛠️ Tech Stack
 
+- Python 3.x
+- Flask
+- Docker
+- Jenkins
+- Git & GitHub
 
-\## 📁 Project Structure
+---
 
-
+## 📁 Folder Structure
 
 ```
 
-
-
-Flask\\\_app\\\_deployment/
-
-├── app.py                 # Main Flask application
-
-├── Dockerfile             # Dockerfile to containerize the app
-
-├── requirements.txt       # Flask and other dependencies
-
-└── README.md              # Project description
-
-
+Flask\_app\_deployment/
+├── app.py                 # Flask application script
+├── Dockerfile             # Docker image build instructions
+├── requirements.txt       # Project dependencies
+└── README.md              # Documentation
 
 ````
 
-
-
 ---
 
-
-
-\## 🐳 Dockerfile
-
-
-
-Example Dockerfile:
+## 🐳 Dockerfile
 
 ```dockerfile
-
 FROM python:3.10-slim
-
-
 
 WORKDIR /app
 
-
-
 COPY . .
-
-
 
 RUN pip install -r requirements.txt
 
-
-
 EXPOSE 5000
 
-
-
-CMD \["python", "app.py"]
-
+CMD ["python", "app.py"]
 ````
 
-
-
 ---
 
+## ⚙️ Jenkins Freestyle Job Setup
 
+### 1. Create Freestyle Job
 
-\## 🔧 Jenkins Freestyle Job Configuration
+* Open Jenkins → New Item → Freestyle project → Name it (e.g., `flask-ci-docker`)
+* Enable **Git** and add your repository URL:
 
+  ```
+  https://github.com/VaibhaviSugandhi1733/Flask_app_deployment.git
+  ```
 
+### 2. Build Step → Execute Shell
 
-1\. Create a new Freestyle project in Jenkins.
+Paste the following in **Execute Shell**:
 
+```bash
+#!/bin/bash
 
+echo "🔁 Pulling latest code..."
+git pull origin main
 
-2\. Source Code Management:
+echo "🐳 Building Docker image..."
+docker build -t vaibhavisugandhi/flask-jenkins-app:latest .
 
+echo "📤 Pushing image to Docker Hub..."
+echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+docker push vaibhavisugandhi/flask-jenkins-app:latest
 
+echo "🧹 Removing old container if exists..."
+docker rm -f flask-app || true
 
-&nbsp;  \* Select Git
-
-&nbsp;  \* Enter Repository URL: `https://github.com/VaibhaviSugandhi1733/Flask\_app\_deployment.git`
-
-
-
-3\. Build Triggers (optional):
-
-
-
-&nbsp;  \* Poll SCM or GitHub webhook
-
-
-
-4\. Build Environment:
-
-
-
-&nbsp;  \* Ensure Docker is installed and Jenkins has permission to run Docker.
-
-
-
-5\. Build Steps → Execute Shell:
-
-
-
-&nbsp;  ```bash
-
-&nbsp;  #!/bin/bash
-
-
-
-&nbsp;  echo "Building Docker image..."
-
-&nbsp;  docker build -t flask-jenkins-app .
-
-
-
-&nbsp;  echo "Removing old container if exists..."
-
-&nbsp;  docker rm -f flask-app || true
-
-
-
-&nbsp;  echo "Running container..."
-
-&nbsp;  docker run -d -p 5000:5000 --name flask-app flask-jenkins-app
-
-&nbsp;  ```
-
-
-
-
-
----
-
-
-
-\## 🌐 Application Route
-
-
-
-Once the Jenkins job runs successfully, access the Flask app at:
-
-
-
+echo "🚀 Running new container..."
+docker run -d -p 5000:5000 --name flask-app vaibhavisugandhi/flask-jenkins-app:latest
 ```
 
+> 🔐 **Note**: Store Docker Hub credentials in Jenkins as environment variables:
+
+* `DOCKERHUB_USERNAME`
+* `DOCKERHUB_PASSWORD`
+
+### 3. Save & Build the Project
+
+---
+
+## 🌐 Accessing the Flask App
+
+After a successful build:
+
+```
 http://<your-server-ip>:5000/
-
 ```
-
-
 
 Example:
 
-
-
 ```
-
 http://localhost:5000/
-
 ```
 
+---
 
+
+## 🙋‍♀️ Author
+
+**Vaibhavi Sugandhi**
+📧 Email: [vaibhavi@example.com](mailto:vaibhavi@example.com)
+🔗 [LinkedIn](https://linkedin.com/in/vaibhavisugandhi)
+💻 [GitHub](https://github.com/VaibhaviSugandhi1733)
+🐳 [Docker Hub](https://hub.docker.com/u/vaibhavisugandhi)
 
 ---
 
 
-
-
-
 ---
 
-
-
-\## 📬 Contact
-
-
-
-\*\*Vaibhavi Sugandhi\*\*
-
-📧 Email: \[vaibhavi@example.com](mailto:vaibhavi@example.com)
-
-🔗 LinkedIn: \[linkedin.com/in/vaibhavisugandhi](https://linkedin.com/in/vaibhavisugandhi)
-
-💻 GitHub: \[github.com/VaibhaviSugandhi1733](https://github.com/VaibhaviSugandhi1733)
-
-
-
----
-
-
-
-\## 📝 License
-
-
-
-This project is licensed under the MIT License.
-
-
-
-```
-
-
+### ✅ Summary of Updates:
+- Added **Docker Hub push command**
+- Used **env variables for Docker credentials**
+- Beautified with icons and polished formatting
+- Structured everything for **maximum clarity**
 
 
 
