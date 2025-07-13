@@ -29,11 +29,14 @@ This project demonstrates a complete CI/CD pipeline where a Python Flask applica
 
 ```
 
-Flask\_app\_deployment/
-├── app.py                 # Flask application script
-├── Dockerfile             # Docker image build instructions
-├── requirements.txt       # Project dependencies
-└── README.md              # Documentation
+Flask_app_deployment/
+├── app/
+│   ├── app.py             # Main Flask application
+│   └── requirements.txt   # Python dependencies
+├── test/
+│   └── test_app.py        # Unit tests for the app
+├── Dockerfile             # Dockerfile to build image
+└── README.md              # Project documentation
 
 ````
 
@@ -116,6 +119,15 @@ http://localhost:5000/
 ```
 
 ---
+
+✅ Unit Testing
+Test file: test/test_app.py
+
+Framework: pytest
+
+Run via Jenkins or locally with:
+
+pytest test/test_app.py
 
 
 ## 🙋‍♀️ Author
