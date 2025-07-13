@@ -121,10 +121,10 @@ http://localhost:5000/
 ## 🙋‍♀️ Author
 
 **Vaibhavi Sugandhi**
-📧 Email: [vaibhavi@example.com](mailto:vaibhavi@example.com)
+📧 Email: [vaibhavi@example.com](mailto:vaibhavi.sugandhi03@gmail.com)
 🔗 [LinkedIn](https://linkedin.com/in/vaibhavisugandhi)
 💻 [GitHub](https://github.com/VaibhaviSugandhi1733)
-🐳 [Docker Hub](https://hub.docker.com/u/vaibhavisugandhi)
+🐳 [Docker Hub](https://hub.docker.com/u/vaibhavisugandhi1733)
 
 ---
 
